@@ -1,5 +1,6 @@
 name: Cache Dependencies Example
 
+# Trigger workflow on push to main branch
 on:
   push:
     branches:
@@ -8,22 +9,23 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      # Step 1: Checkout your repository
+      # Step 1: Checkout repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Restore cache (if available)
+      # Step 2: Restore cache (or create it if missing)
       - name: Restore cache
         id: prime-cache-41eebc2
         uses: actions/cache@v4
         with:
           path: |
-            ~/.npm       # example for Node.js
-            ~/.cache     # optional additional cache
+            ~/.npm
+            ~/.cache
           key: cache-41eebc2
 
-      # Step 3: Install dependencies (npm as example)
+      # Step 3: Install Node.js dependencies
       - name: Install dependencies
         run: npm install
 
