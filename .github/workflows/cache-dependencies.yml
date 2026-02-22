@@ -1,0 +1,32 @@
+name: Cache Dependencies Example
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Checkout your repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Restore cache (if available)
+      - name: Restore cache
+        id: prime-cache-41eebc2
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm       # example for Node.js
+            ~/.cache     # optional additional cache
+          key: cache-41eebc2
+
+      # Step 3: Install dependencies (npm as example)
+      - name: Install dependencies
+        run: npm install
+
+      # Step 4: Show cache hit/miss
+      - name: Show cache result
+        run: echo "Cache hit: ${{ steps.prime-cache-41eebc2.outputs.cache-hit }}"
