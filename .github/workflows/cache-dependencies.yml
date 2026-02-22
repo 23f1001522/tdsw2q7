@@ -1,6 +1,5 @@
 name: Cache Dependencies Example
 
-# Trigger workflow on push to main branch
 on:
   push:
     branches:
@@ -15,7 +14,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Restore cache (or create it if missing)
+      # Step 2: Restore or create cache
       - name: Restore cache
         id: prime-cache-41eebc2
         uses: actions/cache@v4
@@ -31,4 +30,9 @@ jobs:
 
       # Step 4: Show cache hit/miss
       - name: Show cache result
-        run: echo "Cache hit: ${{ steps.prime-cache-41eebc2.outputs.cache-hit }}"
+        run: |
+          if [ "${{ steps.prime-cache-41eebc2.outputs.cache-hit }}" == "true" ]; then
+            echo "Cache hit: true"
+          else
+            echo "Cache hit: false"
+          fi
